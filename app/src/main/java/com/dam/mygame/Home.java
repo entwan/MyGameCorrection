@@ -37,6 +37,19 @@ public class Home extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnMorpion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home.this, Morpion.class);
+
+                String titre = btnMorpion.getText().toString();
+
+                intent.putExtra("TitrePage",titre);
+
+                startActivity(intent);
+            }
+        });
     }
 
 
