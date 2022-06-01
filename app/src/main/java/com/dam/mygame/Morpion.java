@@ -30,6 +30,7 @@ public class Morpion extends AppCompatActivity {
 
     TextView tvWinner;
     Button btnPlayAgain;
+    private boolean gagnant=false;
 
     private void initUI() {
         tvWinner = findViewById(R.id.tvWinner);
@@ -78,10 +79,15 @@ public class Morpion extends AppCompatActivity {
 
             // Loop dans le tableau winningPositions
             for (int[] winningPosition : winningPositions) {
-                if (gameState[winningPosition[0]] == gameState[winningPosition[1]]
-                        && gameState[winningPosition[1]] == gameState[winningPosition[2]]
-                        && gameState[winningPosition[0]] != 0) {
+                Log.i(TAG, "dropIn: winningPosition[0]" + winningPosition[0]);
+                Log.i(TAG, "dropIn: winningPosition[1]" + winningPosition[1]);
+                Log.i(TAG, "dropIn: winningPosition[2]" + winningPosition[2]);
 
+                if (gameState[winningPosition[0]] != 0
+                        && gameState[winningPosition[0]] == gameState[winningPosition[1]]
+                        && gameState[winningPosition[1]] == gameState[winningPosition[2]]
+                    ) {
+                    gagnant = true;
                     String happyEnd;
                     String winner;
 
@@ -100,7 +106,32 @@ public class Morpion extends AppCompatActivity {
                     btnPlayAgain.setVisibility(View.VISIBLE);
                 }
             }
+            if (jeuFini() && !gagnant) {
+                tvWinner.setText("Pas de gagnant");
+                tvWinner.setVisibility(View.VISIBLE);
+                btnPlayAgain.setVisibility(View.VISIBLE);
+            }
+
         }
+    }
+
+    private boolean jeuFini(){
+
+        int j=0;
+        for(int i=0;i<9;i++) {
+            if(gameState[i]==0) {
+                return false;
+            } else {
+                j++;
+            }
+        }
+        if(j==9) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     public void playAgain(View view) {
@@ -117,6 +148,7 @@ public class Morpion extends AppCompatActivity {
         }
 
         activePlayer = 1;
+        gagnant = false;
     }
 
 
